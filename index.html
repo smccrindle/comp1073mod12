@@ -20,13 +20,35 @@
 		</select>
 	</form>
 
-	<h2>The Conqueror Dude, <em>Edgar Allen Poe, 1843</em></h2>
+	<h2>The Conqueror Worm, <em>Edgar Allen Poe, 1843</em></h2>
 
 	<pre>
 
 	</pre>
 	<script>
-		/* STEP 2a: Select an element inside the DOM and store a reference to in inside a variable */
+		var verseChoose = document.querySelector('select');
+		var poemDisplay = document.querySelector('pre');
+
+		verseChoose.onchange = function() {
+			var verse = verseChoose.value;
+			updateDisplay(verse);
+		};
+
+		function updateDisplay(verse) {
+			verse = verse.replace(" ", "");
+			verse = verse.toLowerCase();
+			var url = verse + '.txt';
+			var request = new XMLHttpRequest();
+			request.open('GET', url);
+			request.responseType = 'text';
+			request.onload = function() {
+				poemDisplay.textContent = request.response;
+			};
+			request.send();
+		}
+
+		updateDisplay('Verse 1');
+		verseChoose.value = 'Verse 1';
 
 		// This page inspired by and adapted from https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Client-side_web_APIs/Manipulating_documents
 
