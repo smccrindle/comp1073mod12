@@ -29,8 +29,10 @@
 				}
 				var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
 				// STEP 2: Add a custom marker to the Google Map
+				var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
 				var marker = new google.maps.Marker({
 					position: latlng,
+					icon: iconBase + 'flag_maps.png',
 					map: map
 				});
 			});
