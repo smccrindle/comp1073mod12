@@ -32,9 +32,11 @@
 				var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
 				var marker = new google.maps.Marker({
 					position: latlng,
-					icon: iconBase + 'small_red.png',
+					// STEP 3: Visit https://fusiontables.google.com/DataSource?dsrcid=308519#map:id=3 and change the icon to one of your choosing
+					icon: iconBase + 'placemark_circle_highlight.png',
 					map: map
 				});
+				// STEP 3: Visit https://fusiontables.google.com/DataSource?dsrcid=308519#map:id=3 and change the icon to one of your choosing
 			});
 		} else {
 			var para = document.createElement('p');
