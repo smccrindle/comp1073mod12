@@ -34,10 +34,6 @@
 				var infowindow = new google.maps.InfoWindow({
 					content: contentString
 				});
-				// STEP 5c: Add an event listener to launch the pop-up
-				marker.addListener('click', function() {
-						infowindow.open(map, marker);
-				});
 				// STEP 2: Add a custom marker to the Google Map
 				var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
 				var marker = new google.maps.Marker({
@@ -47,6 +43,11 @@
 					map: map
 				});
 				// STEP 4: Visit https://fusiontables.google.com/DataSource?dsrcid=308519#map:id=3 and change the icon to one of your choosing
+
+				// STEP 5c: Add an event listener to launch the pop-up
+				marker.addListener('click', function() {
+						infowindow.open(map, marker);
+				});
 			});
 		} else {
 			var para = document.createElement('p');
