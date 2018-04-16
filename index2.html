@@ -25,7 +25,11 @@
 					zoom: 8,
 					center: latlng,
 					mapTypeId: google.maps.MapTypeId.TERRAIN,
-					disableDefaultUI: true
+					// STEP 6: Changing the UI controls on the map
+					disableDefaultUI: true,
+					zoomControl: true,
+					mapTypeControl: true,
+					scaleControl: true
 				}
 				var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
 				// STEP 5a: Build out a custom pop-up - start with a string of HTML
