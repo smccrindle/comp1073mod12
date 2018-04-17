@@ -5,15 +5,100 @@
 	<title>Third Party APIs | COMP1073 Client-Side JavaScript</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<link href="css/normalize.css" rel="stylesheet" />
-	<link href="css/styles.css" rel="stylesheet" />
+	<link href="css/nytimes.css" rel="stylesheet" />
 </head>
 <body>
 	<h1>New York Times API</h1>
 	<p>This example shows how to connect to a <abbr title="REpresentative State Transfer">REST</abbr>ful API. It’s a bit different that what we’ve been doing with other APIs.</p>
-	<script src=""></script>
+
+	<div class="wrapper">
+
+		<div class="controls">
+			<form>
+				<p>
+					<label for="search">Enter a SINGLE search term (required): </label>
+					<input type="text" id="search" class="search" required>
+				</p>
+				<p>
+					<label for="start-date">Enter a start date (format YYYYMMDD): </label>
+					<input type="date" id="start-date" class="start-date" pattern="[0-9]{8}">
+				</p>
+				<p>
+					<label for="end-date">Enter an end date (format YYYYMMDD): </label>
+					<input type="date" id="end-date" class="end-date" pattern="[0-9]{8}">
+				</p>
+				<p>
+					<button class="submit">Submit search</button>
+				</p>
+			</form>
+		</div>
+
+		<div class="results">
+			<nav>
+				<button class="prev">Previous 10</button>
+				<button class="next">Next 10</button>
+			</nav>
+
+			<section>
+			</section>
+		</div>
+
+	</div>
+
 	<script>
-	// STEP 1: Consult the New York Times API documentation at https://developer.nytimes.com/
-	
+		// Defining a baseURL and key to as part of the request URL
+		var baseURL = 'https://api.nytimes.com/svc/search/v2/articlesearch.json';
+		// STEP 1: Get your own API key and paste it below…
+		var key = '433e023c825f492d9aa18c857484687b';
+		var url;
+		// Grab references to all the DOM elements you'll need to manipulate
+		var searchTerm = document.querySelector('.search');
+		var startDate = document.querySelector('.start-date');
+		var endDate = document.querySelector('.end-date');
+		var searchForm = document.querySelector('form');
+		var submitBtn = document.querySelector('.submit');
+		var nextBtn = document.querySelector('.next');
+		var previousBtn = document.querySelector('.prev');
+		var section = document.querySelector('section');
+		var nav = document.querySelector('nav');
+		// Hide the "Previous"/"Next" navigation to begin with, as we don't need it immediately
+		nav.style.display = 'none';
+		// define the initial page number and status of the navigation being displayed
+		var pageNumber = 0;
+		var displayNav = false;
+		// Event listeners to control the functionality
+		// STEP 2: Add an event listener for the submit button
+		searchForm.addEventListener('submit', submitSearch);
+
+		// Functions
+		// STEP 3: Add the submitSearch() function
+		function submitSearch(e) {
+			pageNUmber = 0;
+			fetchResults(e);
+		}
+		// STEP 4: Add the fetchResults() function
+		function fetchResults(e) {
+			// Use preventDefault() to stop the form submitting
+			e.preventDefault();
+
+			// Assemble the full URL
+			url = baseURL + '?api-key=' + key + '&page=' + pageNumber + '&q=' + searchTerm.value + '&fq=document_type:("article")';
+
+			if(startDate.value !== '') {
+				url += '&begin_date=' + startDate.value;
+			};
+
+			if(endDate.value !== '') {
+				url += '&end_date=' + endDate.value;
+			};
+			// STEP 5: Use fetch() to pass the URL that we built to the API service
+			// Use fetch() to make the request to the API
+			fetch(url).then(function(result) {
+				return result.json();
+			}).then(function(json) {
+				displayResults(json);
+			});
+		}
 	</script>
 </body>
 </html>
