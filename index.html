@@ -13,10 +13,10 @@
 	<form>
 		<label for="verse-choose">Choose a very cool verse</label>
 		<select id="verse-choose" name="verse-choose">
-			<option>Verse 1</option>
-			<option>Verse 2</option>
-			<option>Verse 3</option>
-			<option>Verse 4</option>
+			<option value="verse1">Verse 1</option>
+			<option value="verse2">Verse 2</option>
+			<option value="verse3">Verse 3</option>
+			<option value="verse4">Verse 4</option>
 		</select>
 	</form>
 
@@ -26,18 +26,20 @@
 
 	</pre>
 	<script>
+		// STEP 1: Grab the HTML elements we need for the interaction
 		var verseChoose = document.querySelector('select');
 		var poemDisplay = document.querySelector('pre');
 
+		// STEP 2: Build out the event handler for the SELECT element
 		verseChoose.onchange = function() {
 			var verse = verseChoose.value;
 			updateDisplay(verse);
 		};
 
+		// STEP 3: Construct updateDisplay() function
 		function updateDisplay(verse) {
-			verse = verse.replace(" ", "");
-			verse = verse.toLowerCase();
 			var url = verse + '.txt';
+			// STEP 4: Put together XHR
 			// var request = new XMLHttpRequest();
 			// request.open('GET', url);
 			// request.responseType = 'text';
@@ -45,13 +47,14 @@
 			// 	poemDisplay.textContent = request.response;
 			// };
 			// request.send();
+			// STEP 6: Comment out above XHR and replace with fetch() and promises
 			fetch(url).then(function(response) {
 				response.text().then(function(text) {
 					poemDisplay.textContent = text;
 				});
 			});
 		}
-
+		// STEP 5: Initialize the app with Verse 1
 		updateDisplay('Verse 1');
 		verseChoose.value = 'Verse 1';
 
